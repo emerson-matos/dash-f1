@@ -28,7 +28,6 @@ function sendToFront(speed, gear, rpm, drs) {
 }
 
 function sendToFront_lapData(position, lap, laptime) {
-  console.log("udate lap data", position, lap, laptime);
   io.emit("lapdata", {
     p: position,
     l: lap,
@@ -39,21 +38,12 @@ function sendToFront_lapData(position, lap, laptime) {
 
 const client = new F122UDP({address: "0.0.0.0", port: 20777});
 
-client.on("motion", function (data) {
-  console.log(data);
-});
-
-client.on("event", (data) => {
-  console.log(data);
-});
-
 client.on("carTelemetry", function (data) {
   let speed = data.m_carTelemetryData[driverID].m_speed;
   let gear = data.m_carTelemetryData[driverID].m_gear;
   let _rpm = data.m_carTelemetryData[driverID].m_engineRPM;
   let drs = data.m_carTelemetryData[driverID].m_drs;
   let revLight = data.m_carTelemetryData[driverID].m_revLightsPercent;
-  console.log(revLight);
   sendToFront(speed, gear, revLight, drs);
 });
 
@@ -81,7 +71,8 @@ client.on("lapData", function (data) {
 client.on("carStatus", function (data) {
   let carStatus = data.m_carStatusData[driverID]
   fiaFlags = carStatus.m_vehicleFiaFlags;
-  io.emit("carStatus", { carStatus: carStatus });
+  
+  io.emit("statusUpdate", { carStatus: carStatus });
 });
 
 client.on("participants", function (data) {
@@ -111,21 +102,3 @@ let adresses = Object.keys(ifaces).reduce(function (result, dev) {
 });
 
 console.log(`IP Local: ${adresses}`);
-
-// const dgram = require('node:dgram');
-
-// const serve2r = dgram.createSocket('udp4');
-
-// serve2r.bind({port: 20777});
-// serve2r.on('error', (err) => {
-//   console.log(`server error:\n${err.stack}`);
-//   serve2r.close();
-// });
-
-// serve2r.on('listening', () => {
-//   const address = serve2r.address();
-//   console.log(`server listening ${address.address}:${address.port}`);
-//   serve2r.on('message', (msg, rinfo) => {
-//     console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-//   });
-// });

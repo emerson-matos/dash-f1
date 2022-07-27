@@ -31,11 +31,11 @@ socket.on('dash', function (cardata) {
     }
 
     if (cardata.drs == 1) {
-        drsElement.class.add("on") 
-        drsElement.class.remove("off") 
+        drsElement.classList.add("on") 
+        drsElement.classList.remove("off") 
     } else {
-        drsElement.class.remove("on") 
-        drsElement.class.add("off") 
+        drsElement.classList.remove("on") 
+        drsElement.classList.add("off") 
     }
 });
 
@@ -46,9 +46,12 @@ const ersMode = {
     3: "overtake"
 }
 
-socket.on('carStatus', function (carStatus) {
-    //ers
-    ersElement.textContent = ersMode[carStatus.m_ersDeployMode];
+socket.on('statusUpdate', function ({ carStatus }) {
+    //carStatus
+    if(carStatus) {
+        // ers
+        ersElement.textContent = ersMode[carStatus.m_ersDeployMode];
+    }
 });
 
 socket.on('lapdata', function (lapdata) {
@@ -92,18 +95,16 @@ function lightLeds(rpm) {
     }
 
     let numLeds = 15
-    let intRpm = parseInt(rpm * numLeds)
+    let intRpm = parseInt(rpm * numLeds / 100)
     //liga o que for menor
     for (let index = intRpm; index > 0; index--) {
         let light = `led${index}`
-        console.log("FSDR ~ lightLeds ~ light ON", light)
         document.getElementById(light).style.backgroundColor = dictionaryLeds[light]
         document.getElementById(light).style.boxShadow = `0px 0px 20px ${dictionaryLeds[light]}`
     }
     //desliga o que for maior
     for (let index = intRpm + 1; index <= numLeds; index++) {
         let light = `led${index}`
-        console.log("FSDR ~ lightLeds ~ light OFF", light)
         document.getElementById(light).style.backgroundColor = "gray"
         document.getElementById(light).style.boxShadow = `0px 0px 0px black`
     }
