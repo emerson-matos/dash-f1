@@ -2,6 +2,8 @@ version: "3.9" # optional since v1.27.0
 services:
   web:
     build: .
+    volumes:
+      - "./:/app_dash"
     ports:
     - "80:3000"
     - "3000:3000"
