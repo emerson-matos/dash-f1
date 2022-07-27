@@ -24,15 +24,17 @@ body {
     height: 25vh;
 }
 
-#speed {
+.speed {
+    text-align: center;
     font-family: digitalFont;
     font-size: 8vh;
     color: yellow;
 }
 
-#lap {
+.lap {
+    text-align: center;
     font-family: digitalFont;
-    font-size: 8vh;
+    font-size: 6vh;
     color: white;
 }
 
@@ -48,12 +50,28 @@ body {
     color: white;
 }
 
-#drs {
+.drs, .ers {
+    text-align: center;
     font-family: digitalFont;
     font-size: 6vh;
-    color: purple;
+    color: white;
 }
 
+.off {
+    margin: 1vh;
+    width: 5vw;
+    height: 10vh;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.on {
+    margin: 1vh;
+    width: 5vw;
+    height: 10vh;
+    background-color: green;
+    border-radius: 50%;
+}
 .first-line {
     margin-top: 1vh;
 }
@@ -73,7 +91,7 @@ body {
     height: 10vh;
     background-color: gray;
     border-radius: 50%;
-    /* box-shadow: #000 0 -1px 7px 1px, inset #460 0 -1px 9px, #7D0 0 2px 12px; */
+    box-shadow: #1BA 0 -1px 7px 1px, inset #5BA 0 -1px 9px, #5DF 0 2px 12px;
 }
 
 
@@ -81,9 +99,7 @@ body {
 .left,
 .right {
     background: rgb(116, 116, 116);
-    position: fixed;
     margin: 1vh;
-
 }
 
 .left,

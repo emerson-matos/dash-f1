@@ -13,7 +13,7 @@ let lateralRight = document.querySelectorAll('.right')
 
 socket.on('dash', function (cardata) {
     // velocidade
-    speed.textContent = `KM/H: ${zeroPad(cardata.speed, 3)}`
+    speed.textContent = `${zeroPad(cardata.speed, 3)}`
     // RPM
     lightLeds(cardata.rpm)
     // Marcha
