@@ -1,82 +1,84 @@
+<!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Formula 1 Dashboard</title>
-    <link rel="stylesheet" href="/static/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/index.css">
-    <link rel="manifest" href="/static/manifest.json">
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/index.css" />
+    <link rel="manifest" href="/static/manifest.json" />
 
     <!-- TODO: REMOVER, temporario -->
-    <link rel="stylesheet" href="public/index.css">
-</head>
+    <link rel="stylesheet" href="public/index.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- REV LIGHTS -->
     <div class="container">
-        <div class="principal">
-            <div id="led1" class="led-off"></div>
-            <div id="led2" class="led-off"></div>
-            <div id="led3" class="led-off"></div>
-            <div id="led4" class="led-off"></div>
-            <div id="led5" class="led-off"></div>
-            <div id="led6" class="led-off"></div>
-            <div id="led7" class="led-off"></div>
-            <div id="led8" class="led-off"></div>
-            <div id="led9" class="led-off"></div>
-            <div id="led10" class="led-off"></div>
-            <div id="led11" class="led-off"></div>
-            <div id="led12" class="led-off"></div>
-            <div id="led13" class="led-off"></div>
-        </div>
+      <div class="principal">
+        <div id="led1" class="led-off"></div>
+        <div id="led2" class="led-off"></div>
+        <div id="led3" class="led-off"></div>
+        <div id="led4" class="led-off"></div>
+        <div id="led5" class="led-off"></div>
+        <div id="led6" class="led-off"></div>
+        <div id="led7" class="led-off"></div>
+        <div id="led8" class="led-off"></div>
+        <div id="led9" class="led-off"></div>
+        <div id="led10" class="led-off"></div>
+        <div id="led11" class="led-off"></div>
+        <div id="led12" class="led-off"></div>
+        <div id="led13" class="led-off"></div>
+        <div id="led14" class="led-off"></div>
+        <div id="led15" class="led-off"></div>
+      </div>
     </div>
 
-
-    <!-- LAP AND SPEED -->
-    <div align='center' class="container first-line">
+    <div class="container">
+      <!-- LAP AND SPEED -->
+      <div align="center" class="container first-line">
         <div class="row">
-            <div class="col">
-                <h1 align='center' id="lap">V0</h1>
-            </div>
-            <div id='drs' class="col">
-                DRS OFF
-            </div>
-            <div class="col">
-                <h1 align='center' id="speed">KM/H: 000</h1>
-            </div>
+          <div class="col">
+            <h1 align="center" id="lap">V0</h1>
+          </div>
+          <div id="drs" class="col">DRS OFF</div>
+          <div id="ers" class="col">ERS</div>
+          <div class="col">
+            <h1 align="center" id="speed">KM/H: 000</h1>
+          </div>
         </div>
+      </div>
     </div>
-
-    <!-- POSITION GEAR -->
-    <div align='center' class="container first-line">
+    <div class="container">
+      <!-- POSITION GEAR -->
+      <div align="center" class="container first-line">
         <div class="row">
-            <div class="col">
-                <h1 align='center' id="position">P0</h1>
-            </div>
-            <div class="col">
-                <h1 id="gear">0</h1>
-            </div>
-            <div class="col">
-                <h1 align='center' id="laptime">00:00:000</h1>
-            </div>
+          <div class="col">
+            <h1 align="center" id="position">P0</h1>
+          </div>
+          <div class="col">
+            <h1 id="gear">0</h1>
+          </div>
+          <div class="col">
+            <h1 align="center" id="laptime">00:00:000</h1>
+          </div>
         </div>
-    </div>
-    <!-- FIA LIGHTS -->
-    <div class="principal">
-        <div class="left" style="top: 30%;"></div>
-        <div class="right" style="top: 30%;"></div>
-        <div class="left" style="top: 40%;"></div>
-        <div class="right" style="top: 40%;"></div>
-        <div class="left" style="top: 50%;"></div>
-        <div class="right" style="top: 50%;"></div>
+      </div>
+
+      <!-- FIA LIGHTS -->
+      <div class="principal">
+        <div class="left" style="top: 30%"></div>
+        <div class="right" style="top: 30%"></div>
+        <div class="left" style="top: 40%"></div>
+        <div class="right" style="top: 40%"></div>
+        <div class="left" style="top: 50%"></div>
+        <div class="right" style="top: 50%"></div>
+      </div>
     </div>
 
     <!-- websocket connection -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/static/bootstrap.bundle.min.js"></script>
-    <script src='/static/main.js'></script>
-</body>
-
+    <script src="/static/main.js"></script>
+  </body>
 </html>

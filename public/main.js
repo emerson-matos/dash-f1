@@ -1,20 +1,20 @@
 const zeroPad = (num, places) => String(num).padStart(places, '0')
-var socket = io();
-var speed = document.getElementById('speed')
-var gear = document.getElementById('gear')
-var lap = document.getElementById('lap')
-var laptime = document.getElementById('laptime')
-var position = document.getElementById('position')
-var lateralLeft = document.querySelectorAll('.left')
-var lateralRight = document.querySelectorAll('.right')
+let socket = io();
+let speed = document.getElementById('speed')
+let gear = document.getElementById('gear')
+let lap = document.getElementById('lap')
+let laptime = document.getElementById('laptime')
+let position = document.getElementById('position')
+let lateralLeft = document.querySelectorAll('.left')
+let lateralRight = document.querySelectorAll('.right')
 //var rpm = document.getElementById('rpm')
 
 socket.on('dash', function (cardata) {
-    //velocidade
+    // velocidade
     speed.textContent = `KM/H: ${zeroPad(cardata.speed, 3)}`
-    //RPM
+    // RPM
     lightLeds(cardata.rpm)
-    //Marcha
+    // Marcha
     let cargear = cardata.gear
     switch (cargear) {
         case 0:
@@ -35,6 +35,19 @@ socket.on('dash', function (cardata) {
         document.getElementById('drs').style.backgroundColor = "black"
         document.getElementById('drs').textContent = 'DRS OFF'
     }
+
+
+});
+const ersMode = { 0: "none",
+1 : "medium",
+2: "hotlap",
+3: "overtake"
+}
+socket.on('carStatus', function (carStatus) {
+    //velocidade
+    
+    document.getElementById('ers') = ersMode[carStatus.m_ersDeployMode];
+    
 
 
 });
@@ -61,7 +74,9 @@ const dictionaryLeds = {
     led10: '#2AFA06',
     led11: '#2AFA06',
     led12: '#2AFA06',
-    led13: '#FFEE00'
+    led13: '#FFEE00',
+    led14: '#FFEE00',
+    led15: '#FFEE00'
 }
 
 /**
@@ -77,8 +92,8 @@ function lightLeds(rpm) {
         document.body.style.backgroundColor = "black";
     }
 
-    let numLeds = 13
-    let intRpm = parseInt(rpm * 0.13)
+    let numLeds = 15
+    let intRpm = parseInt(rpm * numLeds)
     //liga o que for menor
     for (let index = intRpm; index > 0; index--) {
         let light = `led${index}`
