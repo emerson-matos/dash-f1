@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon app.js"
   },
   "keywords": [
     "f12021",
@@ -31,5 +31,8 @@
     "targets": [
       "node14"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }
