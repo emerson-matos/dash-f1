@@ -3,6 +3,8 @@ let socket = io();
 let speed = document.getElementById('speed')
 let gear = document.getElementById('gear')
 let lap = document.getElementById('lap')
+let drsElement = document.getElementById('drs')
+let ersElement = document.getElementById('ers')
 let laptime = document.getElementById('laptime')
 let position = document.getElementById('position')
 let lateralLeft = document.querySelectorAll('.left')
@@ -29,33 +31,30 @@ socket.on('dash', function (cardata) {
     }
 
     if (cardata.drs == 1) {
-        document.getElementById('drs').style.backgroundColor = "#2AFA06"
-        document.getElementById('drs').textContent = 'DRS ON'
+        drsElement.class.add("on") 
+        drsElement.class.remove("off") 
     } else {
-        document.getElementById('drs').style.backgroundColor = "black"
-        document.getElementById('drs').textContent = 'DRS OFF'
+        drsElement.class.remove("on") 
+        drsElement.class.add("off") 
     }
-
-
 });
-const ersMode = { 0: "none",
-1 : "medium",
-2: "hotlap",
-3: "overtake"
+
+const ersMode = { 
+    0: "none",
+    1: "medium",
+    2: "hotlap",
+    3: "overtake"
 }
+
 socket.on('carStatus', function (carStatus) {
-    //velocidade
-    
-    document.getElementById('ers') = ersMode[carStatus.m_ersDeployMode];
-    
-
-
+    //ers
+    ersElement.textContent = ersMode[carStatus.m_ersDeployMode];
 });
 
 socket.on('lapdata', function (lapdata) {
 
-    position.textContent = `P${lapdata.p}`
-    lap.textContent = `V${lapdata.l}`
+    position.textContent = `P ${lapdata.p}`
+    lap.textContent = `V ${lapdata.l}`
     laptime.textContent = lapdata.laptime
     lateralLedsFlags(lapdata.fia_flag)
 

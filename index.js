@@ -54,7 +54,6 @@ client.on("carTelemetry", function (data) {
   let drs = data.m_carTelemetryData[driverID].m_drs;
   let revLight = data.m_carTelemetryData[driverID].m_revLightsPercent;
   console.log(revLight);
-  // console.log(rpm);
   sendToFront(speed, gear, revLight, drs);
 });
 
