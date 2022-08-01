@@ -6,8 +6,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origins: ['http://localhost']
-  }
+    origins: ["http://localhost"],
+  },
 });
 // variavel global
 let bestLap = -100;
@@ -25,10 +25,6 @@ io.on("connection", (socket) => {
   });
 });
 
-function sendToFront(speed, gear, rpm, drs) {
-  io.emit("dash", { speed, gear, rpm, drs });
-}
-
 function sendToFront_lapData(position, lap, laptime) {
   io.emit("lapdata", {
     p: position,
@@ -41,13 +37,7 @@ const client = new F122UDP({ address: "0.0.0.0", port: 20777 });
 
 client.on("carTelemetry", function (data) {
   let driverID = data.m_header.m_playerCarIndex;
-  let speed = data.m_carTelemetryData[driverID].m_speed;
-  let gear = data.m_carTelemetryData[driverID].m_gear;
-  let _rpm = data.m_carTelemetryData[driverID].m_engineRPM;
-  let drs = data.m_carTelemetryData[driverID].m_drs;
-  let revLight = data.m_carTelemetryData[driverID].m_revLightsPercent;
-  // console.log("carTelemetry", data.m_carTelemetryData[driverID])
-  sendToFront(speed, gear, revLight, drs);
+  io.emit("carTelemetry", { carTelemetry: {...data.m_carTelemetryData[driverID], gear: data.m_suggestedGear }});
 });
 
 function millisToMinutesAndSeconds(duration) {
@@ -117,11 +107,7 @@ client.on("sessionHistory", function (data) {
   let driverID = data.m_header.m_playerCarIndex;
   if (driverID === data.m_carIdx) {
     let history = data.m_lapHistoryData;
-    if (
-      bestLap >= 0 &&
-      bestLap < 100 &&
-      actualLap > -1
-    ) {
+    if (bestLap >= 0 && bestLap < 100 && actualLap > -1) {
       let actual = history[actualLap];
       let lapData = {
         m_sector1: {
@@ -150,7 +136,7 @@ client.on("sessionHistory", function (data) {
       bestLap = data.m_bestLapTimeLapNum - 1;
       actualLap = data.m_numLaps - 1;
     }
-    console.log(data.m_numLaps, actualLap)
+    console.log(data.m_numLaps, actualLap);
     if (data.m_numLaps - 1 > actualLap && timer < 0) {
       timer = 30000;
     } else {

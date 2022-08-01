@@ -17,6 +17,84 @@ let position = document.getElementById("position");
 let lateralLeft = document.querySelectorAll(".left");
 let lateralRight = document.querySelectorAll(".right");
 let actualSector = -1;
+//var rpm = document.getElementById('rpm')
+
+socket.on("dash", function (cardata) {
+  // velocidade
+  speed.textContent = `${zeroPad(cardata.speed, 3)}`;
+  // RPM
+  lightLeds(cardata.rpm);
+  // Marcha
+  let cargear = cardata.gear;
+  switch (cargear) {
+    case 0:
+      gear.textContent = "N";
+      break;
+    case -1:
+      gear.textContent = "R";
+      break;
+    default:
+      gear.textContent = cargear;
+      break;
+  }
+
+  if (cardata.drs == 1) {
+    drsElement.classList.add("on");
+    drsElement.classList.remove("off");
+  } else {
+    drsElement.classList.remove("on");
+    drsElement.classList.add("off");
+  }
+});
+
+const ersMode = {
+  0: "none",
+  1: "medium",
+  2: "hotlap",
+  3: "overtake",
+};
+
+socket.on("statusUpdate", function ({ carStatus, lapData, sector }) {
+  //carStatus
+  if (carStatus) {
+    // ers
+    ersElement.textContent = ersMode[carStatus.m_ersDeployMode];
+    lateralLedsFlags(carStatus.m_vehicleFiaFlags);
+  }
+  if (lapData) {
+    if (lapData.m_lapTime) laptimeDelta.textContent = lapData.m_lapTime;
+    if (actualSector > -1 && lapData.m_sector1.time) {
+      sector1.textContent = lapData.m_sector1.time;
+      sector1Delta.textContent = lapData.m_sector1.delta;
+    }
+
+    if (actualSector > 0 && lapData.m_sector2.time) {
+      sector2.textContent = lapData.m_sector2.time;
+      sector2Delta.textContent = lapData.m_sector2.delta;
+    }
+
+    if (actualSector > 1 && lapData.m_sector3.time) {
+      sector3.textContent = lapData.m_sector3.time;
+      sector3Delta.textContent = lapData.m_sector3.delta;
+    }
+  }
+
+  if (sector && sector != actualSector) {
+    actualSector = sector;
+    if (sector == 0) {
+      sector2.textContent = "0.000";
+      sector2Delta.textContent = "0.000";
+      sector3.textContent = "0.000";
+      sector3Delta.textContent = "0.000";
+    }
+  }
+});
+
+socket.on("lapdata", function ({ p, l, lapTime }) {
+  laptime.textContent = lapTime;
+  position.textContent = `P ${p}`;
+  lap.textContent = `V ${l}`;
+});
 
 const dictionaryLeds = {
   led1: "#FF2121",
