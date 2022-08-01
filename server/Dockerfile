@@ -1,5 +1,5 @@
 FROM node:16
-WORKDIR /app_dash
+WORKDIR /server
 COPY . .
 RUN npm install
 RUN npm install mime
