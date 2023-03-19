@@ -18,6 +18,7 @@ export const initiateSocketConnection = ({
   setBrake,
   setSuggestedGear,
   setTyres,
+  setTyresAge,
 }) => {
   socket = io(process.env.REACT_APP_SOCKET_ENDPOINT);
   console.log(`Connecting socket...`);
@@ -25,10 +26,10 @@ export const initiateSocketConnection = ({
   socket.on("statusUpdate", function ({ carStatus, lapData, sector }) {
     //carStatus
     if (carStatus) {
-      // ers
       setERS(carStatus.m_ersDeployMode);
       setFlags(carStatus.m_vehicleFiaFlags);
       setTyres(carStatus.m_visualTyreCompound);
+      setTyresAge(carStatus.m_tyresAgeLaps);
     }
     if (lapData) {
       setLapData(lapData);

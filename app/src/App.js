@@ -45,6 +45,7 @@ function App() {
       setSuggestedGear,
       setLapTime,
       setTyres,
+      setTyresAge,
     });
     return () => {
       disconnectSocket();

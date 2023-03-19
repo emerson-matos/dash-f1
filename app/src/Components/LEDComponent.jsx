@@ -1,6 +1,6 @@
-export default function LEDComponent({ active, content, color, defaultColor, size }) {
-  
+export default function LEDComponent({ active, content, bgColor, defaultColor }) {
+
   return (
-    <div className={`led ${active ? color : defaultColor}`}>{content}</div>
+    <div className={`led ${active ? bgColor : defaultColor}`}>{content}</div>
   );
 }

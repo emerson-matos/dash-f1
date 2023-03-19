@@ -10,9 +10,8 @@ const io = new Server(server, {
   },
 });
 // variavel global
-let bestLap = -100;
-let actualLap = -100;
-let timer = 0;
+let bestLap = 0;
+let actualLap = 0;
 
 app.get("/", (_req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -37,7 +36,12 @@ const client = new F122UDP({ address: "0.0.0.0", port: 20777 });
 
 client.on("carTelemetry", function (data) {
   let driverID = data.m_header.m_playerCarIndex;
-  io.emit("carTelemetry", { carTelemetry: {...data.m_carTelemetryData[driverID], gear: data.m_suggestedGear }});
+  io.emit("carTelemetry", {
+    carTelemetry: {
+      ...data.m_carTelemetryData[driverID],
+      gear: data.m_suggestedGear,
+    },
+  });
 });
 
 function millisToMinutesAndSeconds(duration) {
@@ -130,19 +134,19 @@ client.on("sessionHistory", function (data) {
         },
         m_lapTime: millisToMinutesAndSeconds(actual.m_lapTimeInMS),
       };
-      io.emit("statusUpdate", { lapData });
-    }
-    if (timer < 0) {
       bestLap = data.m_bestLapTimeLapNum - 1;
       actualLap = data.m_numLaps - 1;
+
+      io.emit("statusUpdate", { lapData });
     }
-    console.log(data.m_numLaps, actualLap);
-    if (data.m_numLaps - 1 > actualLap && timer < 0) {
-      timer = 30000;
-    } else {
-      timer = timer - 1;
-    }
-    console.log("timer", timer);
+    
+    console.log(
+      "lpas",
+      bestLap,
+      data.m_bestLapTimeLapNum - 1,
+      actualLap,
+      data.m_numLaps - 1
+    );
   }
 });
 

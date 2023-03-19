@@ -14,9 +14,9 @@ export default function CarComponent() {
       <div id="top-front-wing-tail"></div>
       <div id="bottom-front-wing"></div>
       <div id="bottom-front-wing-tail"></div>
-      <div id="bottom-front-wheel" class="wheel"></div>
+      <div id="bottom-front-wheel" className="wheel"></div>
       <div id="bottom-back-wheel"></div>
-      <div id="top-front-wheel" class="wheel"></div>
+      <div id="top-front-wheel" className="wheel"></div>
       <div id="top-back-wheel"></div>
       <div id="rear-body"></div>
       <div id="rear-wing-bg"></div>
